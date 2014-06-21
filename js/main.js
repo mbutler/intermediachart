@@ -1,17 +1,17 @@
 //init////////////////
 
+var intermediaChart = new Firebase(''); //add unique Firebase url
 
 // get width and height of window
 w = $("#canvas-div").width();
 h = window.innerHeight;
 
 
-
 // create a wrapper around native canvas element (with id="canvas")
 var canvas = new fabric.Canvas('canvas');
 canvas.setHeight(h);
 canvas.setWidth(w);
-canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)', canvas.renderAll.bind(canvas)); //pink
+canvas.setBackgroundColor('rgba(0, 0, 0, 00)', canvas.renderAll.bind(canvas)); //pink
 
 // create the main intermedia circle
 mainCircle = new fabric.Circle({
@@ -28,7 +28,7 @@ mainCircle = new fabric.Circle({
 
 // create the main intermedia title
 var intermediaTitle = new fabric.Text('Intermedia', { 
-  left: mainCircle.radius * 3, 
+  left: mainCircle.radius * 3,
   top: 100,
   fontWeight: 'bold',
   angle: 48,
@@ -51,6 +51,9 @@ circleNumber = 1;
 function addCircle() {   
 
   var id = [circleNumber];
+
+  labelText = $('#circleinput').val();
+
   
      circle = new fabric.Circle({
 
@@ -67,9 +70,8 @@ function addCircle() {
        
      });  
 
-     label = new fabric.Text("some text is \n better than \n others", {
+     label = new fabric.Text(labelText, {
       
-      textAlign:          'left', //alignment when multiline
       left:               10, //padding left from circle's originX 
       top:                -25, //padding center from circle's originY
       fontSize:           18,
@@ -94,10 +96,15 @@ function addCircle() {
   //group these and change label from dom
   canvas.add(circleLabelGroup);
 
+  intermediaChart.set({
+    name:   labelText,
+  });
+
   //prepare id for next circle
   circleNumber++;
 
-  console.log(label.getBoundingRect());
-
-
 } //end addCircle
+
+$( window ).resize(function() {
+  location.reload();
+});
