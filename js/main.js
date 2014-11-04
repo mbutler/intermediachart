@@ -65,6 +65,7 @@ function addCircle() {
        stroke:            'black',
        strokeWidth:       1,
        lockRotation:      true,
+       lockUniScaling:    true,
        hasRotatingPoint:  false,    
        
      });  
@@ -115,6 +116,15 @@ function addCircle() {
       top:    clientCircle.top,
       left:   clientCircle.left,
 
-    });       
+    });
+
+    //access any child location's value
+    var textLabelUrl = 'https://flickering-fire-8187.firebaseio.com' + '/' + object.target.name + '/objects/1/text';    
+    var firebaseLabelText = new Firebase(textLabelUrl); 
+
+    firebaseLabelText.once('value', function(dataSnapshot) {
+      var labelText = dataSnapshot.val();
+      console.log(labelText);
+    }); 
     
   });
